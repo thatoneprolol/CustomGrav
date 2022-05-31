@@ -1,0 +1,228 @@
+-- Gui to Lua
+-- Version: 3.2
+
+-- Instances:
+
+local ScreenGui = Instance.new("ScreenGui")
+local TextLabel = Instance.new("TextLabel")
+local High = Instance.new("TextButton")
+local Default = Instance.new("TextButton")
+local Medium = Instance.new("TextButton")
+local Low = Instance.new("TextButton")
+local Frame = Instance.new("Frame")
+local Frame_2 = Instance.new("Frame")
+local Frame_3 = Instance.new("Frame")
+local Frame_4 = Instance.new("Frame")
+
+--Properties:
+
+ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+TextLabel.Parent = ScreenGui
+TextLabel.BackgroundColor3 = Color3.fromRGB(0, 153, 255)
+TextLabel.BackgroundTransparency = 0.500
+TextLabel.Position = UDim2.new(0.145454541, 0, 0.112763323, 0)
+TextLabel.Size = UDim2.new(0, 296, 0, 51)
+TextLabel.Font = Enum.Font.SourceSans
+TextLabel.Text = "CustomGrav"
+TextLabel.TextColor3 = Color3.fromRGB(0, 0, 0)
+TextLabel.TextScaled = true
+TextLabel.TextSize = 14.000
+TextLabel.TextWrapped = true
+
+High.Name = "High"
+High.Parent = TextLabel
+High.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+High.Position = UDim2.new(-0.00116709119, 0, 2.15409279, 0)
+High.Size = UDim2.new(0, 124, 0, 39)
+High.Font = Enum.Font.SourceSans
+High.Text = "High"
+High.TextColor3 = Color3.fromRGB(255, 255, 255)
+High.TextScaled = true
+High.TextSize = 14.000
+High.TextWrapped = true
+
+Default.Name = "Default"
+Default.Parent = TextLabel
+Default.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+Default.Position = UDim2.new(0.579913974, 0, 2.15409279, 0)
+Default.Size = UDim2.new(0, 124, 0, 39)
+Default.Font = Enum.Font.SourceSans
+Default.Text = "Default"
+Default.TextColor3 = Color3.fromRGB(255, 255, 255)
+Default.TextScaled = true
+Default.TextSize = 14.000
+Default.TextWrapped = true
+
+Medium.Name = "Medium"
+Medium.Parent = TextLabel
+Medium.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+Medium.Position = UDim2.new(-0.00116707385, 0, 1.05605364, 0)
+Medium.Size = UDim2.new(0, 124, 0, 45)
+Medium.Font = Enum.Font.SourceSans
+Medium.Text = "Medium"
+Medium.TextColor3 = Color3.fromRGB(255, 255, 255)
+Medium.TextScaled = true
+Medium.TextSize = 14.000
+Medium.TextWrapped = true
+
+Low.Name = "Low"
+Low.Parent = TextLabel
+Low.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+Low.Position = UDim2.new(0.579913974, 0, 1.05670977, 0)
+Low.Size = UDim2.new(0, 124, 0, 45)
+Low.Font = Enum.Font.SourceSans
+Low.Text = "Low"
+Low.TextColor3 = Color3.fromRGB(255, 255, 255)
+Low.TextScaled = true
+Low.TextSize = 14.000
+Low.TextWrapped = true
+
+Frame.Parent = TextLabel
+Frame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Frame.Position = UDim2.new(0.416342646, 0, 1.05420315, 0)
+Frame.Size = UDim2.new(0, 48, 0, 95)
+
+Frame_2.Parent = TextLabel
+Frame_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Frame_2.BorderColor3 = Color3.fromRGB(255, 255, 255)
+Frame_2.Position = UDim2.new(0.580568671, 0, 1.92507386, 0)
+Frame_2.Size = UDim2.new(0, 124, 0, 10)
+
+Frame_3.Parent = TextLabel
+Frame_3.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Frame_3.BorderColor3 = Color3.fromRGB(255, 255, 255)
+Frame_3.Position = UDim2.new(-0.00319410861, 0, 1.94468176, 0)
+Frame_3.Size = UDim2.new(0, 123, 0, 10)
+
+Frame_4.Parent = TextLabel
+Frame_4.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Frame_4.BorderColor3 = Color3.fromRGB(255, 255, 255)
+Frame_4.Position = UDim2.new(-0.00319410861, 0, 2.90062308, 0)
+Frame_4.Size = UDim2.new(0, 296, 0, 31)
+
+-- Scripts:
+
+local function FSEK_fake_script() -- TextLabel.LocalScript 
+	local script = Instance.new('LocalScript', TextLabel)
+
+	local UIS = game:GetService('UserInputService')
+	
+	local frame = script.Parent
+	
+	
+	
+	local dragToggle = nil
+	
+	local dragSpeed = 0.25
+	
+	local dragStart = nil
+	
+	local startPos = nil
+	
+	
+	
+	local function updateInput(input)
+	
+		local delta = input.Position - dragStart
+	
+		local position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X,
+	
+			startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+	
+		game:GetService('TweenService'):Create(frame, TweenInfo.new(dragSpeed), {Position = position}):Play()
+	
+	end
+	
+	
+	
+	frame.InputBegan:Connect(function(input)
+	
+		if (input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch) then 
+	
+			dragToggle = true
+	
+			dragStart = input.Position
+	
+			startPos = frame.Position
+	
+			input.Changed:Connect(function()
+	
+				if input.UserInputState == Enum.UserInputState.End then
+	
+					dragToggle = false
+	
+				end
+	
+			end)
+	
+		end
+	
+	end)
+	
+	
+	
+	UIS.InputChanged:Connect(function(input)
+	
+		if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+	
+			if dragToggle then
+	
+				updateInput(input)
+	
+			end
+	
+		end
+	
+	end)
+end
+coroutine.wrap(FSEK_fake_script)()
+local function HDNLCU_fake_script() -- High.LocalScript 
+	local script = Instance.new('LocalScript', High)
+
+	script.Parent.MouseButton1Click:connect(function()
+		if game.Workspace.Gravity == 20 then
+			game.Workspace.Gravity = 20
+		else
+			game.Workspace.Gravity = 20
+		end
+	end)
+end
+coroutine.wrap(HDNLCU_fake_script)()
+local function HHNRZA_fake_script() -- Default.LocalScript 
+	local script = Instance.new('LocalScript', Default)
+
+	script.Parent.MouseButton1Click:connect(function()
+		if game.Workspace.Gravity == 196.2 then
+			game.Workspace.Gravity = 196.2
+		else
+			game.Workspace.Gravity = 196.2
+		end
+	end)
+end
+coroutine.wrap(HHNRZA_fake_script)()
+local function WYUDIP_fake_script() -- Medium.LocalScript 
+	local script = Instance.new('LocalScript', Medium)
+
+	script.Parent.MouseButton1Click:connect(function()
+		if game.Workspace.Gravity == 69 then
+			game.Workspace.Gravity = 69
+		else
+			game.Workspace.Gravity = 69
+		end
+	end)
+end
+coroutine.wrap(WYUDIP_fake_script)()
+local function LVTOSSY_fake_script() -- Low.LocalScript 
+	local script = Instance.new('LocalScript', Low)
+
+	script.Parent.MouseButton1Click:connect(function()
+		if game.Workspace.Gravity == 900 then
+			game.Workspace.Gravity = 900
+		else
+			game.Workspace.Gravity = 900
+		end
+	end)
+end
+coroutine.wrap(LVTOSSY_fake_script)()
